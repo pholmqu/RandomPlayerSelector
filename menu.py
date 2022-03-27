@@ -75,6 +75,24 @@ class MyMenu:
         # Create Edit Menu
         self.edit_menu = Menu(self.menubar)
 
+        # Add 'Canvas Color' to Edit Menu
+        self.edit_menu.add_command(
+            label='Canvas Color',
+            command=lambda: app.set_color('Canvas')
+        )
+
+        # Add 'Frame Color' to Edit Menu
+        self.edit_menu.add_command(
+            label='Frame Color',
+            command=lambda: app.set_color('Frame')
+        )
+
+        # Add 'Reset to Default Colors' to Edit Menu
+        self.edit_menu.add_command(
+            label='Reset to Default Colors',
+            command=lambda: app.set_default_color()
+        )
+
         # Add Edit Menu to menubar
         self.menubar.add_cascade(
             label='Edit',
