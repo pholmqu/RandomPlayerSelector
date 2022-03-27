@@ -134,7 +134,7 @@ def main():
     root.title("Random Player Selector")
     root.iconphoto(
         False, tk.PhotoImage(
-            file='/Users/patrickholmquist/Documents/PatrickPrograms/D&D/dnd_icon.png'))
+            file='/Users/patrickholmquist/Documents/PatrickPrograms/DnD/RandomPlayerSelector/images/dnd_icon.png'))
 
     # Create main window
     canvas = tk.Canvas(root,
