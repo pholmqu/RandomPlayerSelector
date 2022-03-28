@@ -47,10 +47,10 @@ class MyMenu:
             command=lambda: app.players.add_player(app)
         )
 
-        # Add 'Assign Numbers' Button to Player Menu
+        # Add 'Shuffle Players' Button to Player Menu
         self.player_menu.add_command(
-            label='Assign Numbers',
-            command=lambda: app.players.assign_numbers(app)
+            label='Shuffle Players',
+            command=lambda: app.players.shuffle_players(app)
         )
 
         # Add 'Remove Last Player' Button to Player Menu

@@ -1,7 +1,7 @@
 from multiprocessing.dummy import current_process
 from os import curdir
 import tkinter as tk
-from tkinter import colorchooser
+from tkinter import colorchooser, Label
 from turtle import title
 import menu
 from random import randrange
@@ -16,31 +16,35 @@ class Window:
 
     def roll(self):
         num = randrange(
-            start=1,
-            stop=len(self.players.ListOfPlayers) + 1
+            start=0,
+            stop=len(self.players.ListOfPlayers)
         )
 
-        self.players.update_list(self)
+        # self.players.update_list(self)
 
-        label = tk.Label(
-            self.frame,
-            text=num,
-            bg=self.cur_frame
+        for widget in self.frame.winfo_children():
+            widget.destroy()
+
+        self.canvas.config(
+            height=(len(self.players.ListOfPlayers) * 30)
         )
-        label.pack()
 
-        pname = ''
         for p in self.players.ListOfPlayers:
-            if int(p.number) == int(num):
-                pname = p.name
-        
-        label2 = tk.Label(
-            self.frame,
-            font=("Comic Sans MS", 20, "bold"),
-            text=pname,
-            bg=self.cur_frame
-        )
-        label2.pack()
+            if num == self.players.ListOfPlayers.index(p):
+                label2 = tk.Label(
+                    self.frame,
+                    font=("Comic Sans MS", 20, "bold"),
+                    text=self.players.ListOfPlayers[num].name,
+                    bg=self.cur_frame
+                )
+                label2.pack()
+            else:
+                label = Label(
+                    self.frame,
+                    text=str(p),
+                    bg=self.cur_frame
+                )
+                label.pack()
 
     def set_color(self, location):
         if location == 'Canvas':
@@ -80,8 +84,6 @@ class Window:
 
         # Creating Canvas
         self.canvas = tk.Canvas(self.root,
-                                height=700,
-                                width=700,
                                 bg=self.cur_canvas)
 
         # Creating Frame

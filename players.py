@@ -1,5 +1,5 @@
 from genericpath import exists
-from random import randrange
+from random import randrange, shuffle
 from tkinter.font import NORMAL
 from turtle import title
 import player
@@ -23,7 +23,7 @@ class Players:
                 prompt='What is the name of the player that you want to add?'
             )
         
-        self.ListOfPlayers.append(player.Player(name, 0))
+        self.ListOfPlayers.append(player.Player(name))
 
         self.update_list(app)
 
@@ -61,7 +61,7 @@ class Players:
                         player_attrs = line.split('\t')
                         self.ListOfPlayers.append(
                             player.Player(
-                                player_attrs[0], player_attrs[1]
+                                player_attrs[0]
                             )
                         )
 
@@ -79,6 +79,10 @@ class Players:
         self.ListOfPlayers.pop()
         self.update_list(app)
 
+    def shuffle_players(self, app):
+        shuffle(self.ListOfPlayers)
+        self.update_list(app)
+
     def clear_players(self, app):
         self.ListOfPlayers.clear()
         self.update_list(app)
@@ -86,6 +90,15 @@ class Players:
     def update_list(self, app):
         for widget in app.frame.winfo_children():
             widget.destroy()
+
+        if len(self.ListOfPlayers) == 0:
+            h = 50
+        else:
+            h = len(self.ListOfPlayers) * 25
+
+        app.canvas.config(
+            height=h
+        )
 
         for p in self.ListOfPlayers:
             label = Label(
@@ -95,42 +108,11 @@ class Players:
             )
             label.pack()
 
-        self.check_assigned(app)
-
-    def assign_numbers(self, app):
-        nums = []
-        while len(nums) != len(self.ListOfPlayers):
-            num = randrange(
-                start=1,
-                stop=len(self.ListOfPlayers) + 1
+        if len(self.ListOfPlayers) > 0:
+            app.btnRoll.config(
+                state=NORMAL
             )
-
-            while num in nums:
-                num = randrange(
-                    start=1,
-                    stop=len(self.ListOfPlayers) + 1
-                )
-
-            nums.append(num)
-
-
-
-        for p in self.ListOfPlayers:
-            p.set_number(nums[self.ListOfPlayers.index(p)])
-        self.update_list(app)
-
-    def check_assigned(self, app):
-        if len(self.ListOfPlayers) == 0:
+        else:
             app.btnRoll.config(
                 state=DISABLED
             )
-            return
-        else:
-            for p in self.ListOfPlayers:
-                if p.number == 0:
-                    app.btnRoll.config(
-                        state=DISABLED
-                    )
-                    return
-
-            app.btnRoll.config(state=NORMAL)
